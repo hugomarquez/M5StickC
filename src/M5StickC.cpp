@@ -1,46 +1,46 @@
-// Copyright (c) M5Stack. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
+/**
+ * @class M5StickC
+ * @brief M5StickC library
+ * @file M5StickC.h
+ * @author M5Stack
+ * @version v0.1.0
+ * @date 2019/09/08
+ * 
+ * Licensed under the MIT license. See LICENSE file in the project root for full license information.
+ * Copyright (c) M5Stack. All rights reserved.
+ **/
 #include "M5StickC.h"
 
-M5StickC::M5StickC():isInited(0) {
-
-}
+M5StickC::M5StickC():_isInit(0) {}
 
 void M5StickC::begin(bool LCDEnable, bool PowerEnable, bool SerialEnable){
-	
-	//! Correct init once
-	if (isInited) return;
-	else isInited = true;
+	if (_isInit) return;
+	else _isInit = true;
 
-	//! UART
-	if (SerialEnable) {
+	if (serial) {
 		Serial.begin(115200);
 		Serial.flush();
 		delay(50);
 		Serial.print("M5StickC initializing...");
 	}
 
-    // Power
-	if (PowerEnable) {
-		Axp.begin();
+	if (power) {
+		axp.begin();
+	}
+	
+	if (display) {
+		lcd.begin();
 	}
 
-	// LCD INIT
-	if (LCDEnable) {
-		Lcd.begin();
-	}
-
-	if (SerialEnable) {
+	if (serial) {
 		Serial.println("OK");
 	}
-
-	Rtc.begin();
+	rtc.begin();
 }
 
 void M5StickC::update() {
-	M5.BtnA.read();
-	M5.BtnB.read();
+	M5.btnA.read();
+	M5.btnB.read();
 }
 
 M5StickC M5;
