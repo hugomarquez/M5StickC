@@ -1,7 +1,7 @@
 /**
  * @class M5StickC
  * @brief M5StickC library
- * @file M5StickC.h
+ * @file M5StickC.cpp
  * @author M5Stack
  * @version v0.1.0
  * @date 2019/09/08
