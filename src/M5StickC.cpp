@@ -9,6 +9,7 @@
  * Licensed under the MIT license. See LICENSE file in the project root for full license information.
  * Copyright (c) M5Stack. All rights reserved.
  **/
+
 #include "M5StickC.h"
 
 M5StickC::M5StickC():_isInit(0) {}
