@@ -26,17 +26,17 @@ void M5StickC::begin(bool display, bool power, bool serial){
 	}
 
 	if (power) {
-		axp.begin();
+		Axp.begin();
 	}
 	
 	if (display) {
-		lcd.begin();
+		Lcd.begin();
 	}
 
 	if (serial) {
 		Serial.println("OK");
 	}
-	rtc.begin();
+	Rtc.begin();
 }
 
 void M5StickC::update() {

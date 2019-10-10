@@ -35,12 +35,12 @@ class M5StickC {
   private:
     bool _isInit;
   public:
-    M5Display lcd = M5Display();
-    AXP192 axp = AXP192();
-    RTC  rtc;
-    IMU imu;
-    MPU6886 mpu6886;
-    SH200Q sh200Q;
+    M5Display Lcd = M5Display();
+    AXP192 Axp = AXP192();
+    RTC  Rtc;
+    IMU Imu;
+    MPU6886 Mpu6886;
+    SH200Q Sh200Q;
 
     #define DEBOUNCE_MS 10
     Button btnA = Button(BUTTON_A_PIN, true, DEBOUNCE_MS);
