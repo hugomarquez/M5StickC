@@ -15,7 +15,7 @@ float yaw   = 0.0F;
 void setup() {
   // put your setup code here, to run once:
   M5.begin();
-  M5.IMU.Init();
+  M5.Imu.Init();
   M5.Lcd.setRotation(3);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextSize(1);
@@ -29,17 +29,17 @@ void setup() {
 
 float temp = 0;
 /*****************************************
-M5.IMU.getGyroData(&gyroX,&gyroY,&gyroZ);
-M5.IMU.getAccelData(&accX,&accY,&accZ);
-M5.IMU.getAhrsData(&pitch,&roll,&yaw);
-M5.IMU.getTempData(&temp);
+M5.Imu.getGyroData(&gyroX,&gyroY,&gyroZ);
+M5.Imu.getAccelData(&accX,&accY,&accZ);
+M5.Imu.getAhrsData(&pitch,&roll,&yaw);
+M5.Imu.getTempData(&temp);
 *****************************************/
 void loop() {
   // put your main code here, to run repeatedly:
-  M5.IMU.getGyroData(&gyroX,&gyroY,&gyroZ);
-  M5.IMU.getAccelData(&accX,&accY,&accZ);
-  M5.IMU.getAhrsData(&pitch,&roll,&yaw);
-  M5.IMU.getTempData(&temp);
+  M5.Imu.getGyroData(&gyroX,&gyroY,&gyroZ);
+  M5.Imu.getAccelData(&accX,&accY,&accZ);
+  M5.Imu.getAhrsData(&pitch,&roll,&yaw);
+  M5.Imu.getTempData(&temp);
   
   M5.Lcd.setCursor(0, 20);
   M5.Lcd.printf("%6.2f  %6.2f  %6.2f      ", gyroX, gyroY, gyroZ);

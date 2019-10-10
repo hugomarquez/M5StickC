@@ -1,7 +1,7 @@
 #include <M5StickC.h>
 
-RTC_TimeTypeDef RTC_TimeStruct;
-RTC_DateTypeDef RTC_DateStruct;
+RTC::Time RTC_TimeStruct;
+RTC::Date RTC_DateStruct;
 
 void setup() {
   // put your setup code here, to run once:
@@ -12,12 +12,12 @@ void setup() {
   M5.Lcd.setTextSize(1);
   M5.Lcd.setCursor(40, 0, 2);
   M5.Lcd.println("RTC TEST");
-  RTC_TimeTypeDef TimeStruct;
+  RTC::Time TimeStruct;
   TimeStruct.Hours   = 18;
   TimeStruct.Minutes = 56;
   TimeStruct.Seconds = 10;
   M5.Rtc.SetTime(&TimeStruct);
-  RTC_DateTypeDef DateStruct;
+  RTC::Date DateStruct;
   DateStruct.WeekDay = 3;
   DateStruct.Month = 3;
   DateStruct.Date = 22;

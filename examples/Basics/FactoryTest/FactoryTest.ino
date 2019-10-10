@@ -58,8 +58,8 @@ float gyroX_f = 0;
 float gyroY_f = 0;
 float gyroZ_f = 0;
 void imu_test(){
-  M5.IMU.getGyroData(&gyroX_f,&gyroY_f,&gyroZ_f);
-  M5.IMU.getAccelData(&accX_f,&accY_f,&accZ_f);
+  M5.Imu.getGyroData(&gyroX_f,&gyroY_f,&gyroZ_f);
+  M5.Imu.getAccelData(&accX_f,&accY_f,&accZ_f);
   
   M5.Lcd.setTextColor(GREEN, WHITE);
   M5.Lcd.setCursor(20, 1, 1);
@@ -184,9 +184,9 @@ void setup() {
   delay(1000);
   M5.Lcd.fillScreen(WHITE);
 
-  //!IMU
-  M5.IMU.Init();
-  Serial.printf("imuType = %d\n",M5.IMU.imuType);
+  //!Imu
+  M5.Imu.Init();
+  Serial.printf("imuType = %d\n",M5.Imu.imuType);
 
   //!IR LED
   rem.begin(M5_IR,true);

@@ -25,7 +25,7 @@ float accZ = 0;
 
 void setup(void) {
   M5.begin();
-  M5.IMU.Init();
+  M5.Imu.Init();
 
   M5.Lcd.setRotation(1);
   
@@ -44,7 +44,7 @@ void loop() {
 
 
   while(1) {
-    M5.IMU.getAccelData(&accX,&accY,&accZ);
+    M5.Imu.getAccelData(&accX,&accY,&accZ);
     if (accX > 1.5 ||  accY > 1.5 ) {
       break;
     }
