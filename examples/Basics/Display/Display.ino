@@ -1,8 +1,7 @@
 #include <M5StickC.h>
 
 // the setup routine runs once when M5StickC starts up
-void setup() {
-  
+void setup() {  
   // initialize the M5StickC object
   M5.begin();
 
@@ -39,9 +38,15 @@ void setup() {
 
 // the loop routine runs over and over again forever
 void loop(){
-
   //rand draw 
-  M5.Lcd.fillTriangle(random(M5.Lcd.width()-1), random(M5.Lcd.height()-1), random(M5.Lcd.width()-1), random(M5.Lcd.height()-1), random(M5.Lcd.width()-1), random(M5.Lcd.height()-1), random(0xfffe));
-
+  M5.Lcd.fillTriangle(
+    random(M5.Lcd.width()-1), 
+    random(M5.Lcd.height()-1), 
+    random(M5.Lcd.width()-1), 
+    random(M5.Lcd.height()-1), 
+    random(M5.Lcd.width()-1), 
+    random(M5.Lcd.height()-1), 
+    random(0xfffe)
+  );
   //M5.update();
 }
