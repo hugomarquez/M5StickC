@@ -2,7 +2,7 @@
  * CI-N5-V
  * @author: Hugo J. Marquez
  * @description: Gesture Control with IMU, AXP, BT modules
- * 
+ *
  */
 
 #include <M5StickC.h>
@@ -57,6 +57,13 @@ void readBT() {
   delay(20);
 }
 
+void writeBT() {
+  if(Serial.available()) {
+    Serial.println("Sending Message ...")
+    BT.write(Serial.read());
+  }
+}
+
 void setDisplay(){
   M5.Lcd.setRotation(3);
   M5.Lcd.fillScreen(BLACK);
@@ -74,12 +81,12 @@ void setIMU() {
   smooth(3, gx);
   smooth(4, gy);
   smooth(5, gz);
-  
+
   Serial.printf("ax: %6.2f", average[0]); Serial.print("\t");
   Serial.printf("ay: %6.2f", average[1]); Serial.print("\t");
   Serial.printf("az: %6.2f", average[2]); Serial.print("\t");
   Serial.println();
-  
+
   Serial.printf("gx: %6.2f", average[3]); Serial.print("\t");
   Serial.printf("gy: %6.2f", average[4]); Serial.print("\t");
   Serial.printf("gz: %6.2f", average[5]);
@@ -100,14 +107,14 @@ void setSmoothArray(){
 void smooth(int axis, float val) {
   total[axis] -= readings[axis][readIndex[axis]];
   total[axis] += val;
-  
+
   // add value to running total
   readings[axis][readIndex[axis]] = val;
   readIndex[axis]++;
-  
+
   if(readIndex[axis] >= 25)
     readIndex[axis] = 0;
-    
+
   // calculate the average:
   average[axis] = total[axis] / 25;
 }
