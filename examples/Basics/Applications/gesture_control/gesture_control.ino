@@ -45,7 +45,7 @@ void loop() {
   loopTime = millis();
   lowBatteryWarning();
   screenBrightness();
-  //setIMU();
+  setIMU();
   readBT();
   startTime = loopTime;
 }
@@ -59,7 +59,7 @@ void readBT() {
 
 void writeBT() {
   if(Serial.available()) {
-    Serial.println("Sending Message ...")
+    Serial.println("Sending Message ...");
     BT.write(Serial.read());
   }
 }
