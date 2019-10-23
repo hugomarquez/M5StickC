@@ -45,8 +45,9 @@ void loop() {
   loopTime = millis();
   lowBatteryWarning();
   screenBrightness();
-  setIMU();
+  //setIMU();
   readBT();
+  writeBT();
   startTime = loopTime;
 }
 
