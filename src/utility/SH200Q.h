@@ -4,7 +4,7 @@
 #include <Wire.h>
 #include <Arduino.h>
 
-#define SH200I_ADDRESS 0x6C //7bit i2c address 
+#define SH200I_ADDRESS 0x6C //7bit i2c address
 #define SH200I_WHOAMI 0x30
 #define SH200I_ACC_CONFIG 0x0E
 #define SH200I_GYRO_CONFIG 0x0F
@@ -47,7 +47,7 @@ public:
   void getTempData(float *t);
 
 public:
-  
+
    float aRes, gRes;
 
 
@@ -69,6 +69,6 @@ protected:
 
     // Specify sensor full scale
     uint8_t Gscale = GFS_2000DPS;
-    uint8_t Ascale = AFS_8G;
+    uint8_t Ascale = AFS_4G; // Default 4g instead of 8g; create method setRange
 };
 #endif
