@@ -119,8 +119,8 @@ int SH200Q::Init(void)
   tempdata[0] = 0x00;
   I2C_Write_NBytes(SH200I_ADDRESS, 0x78, 1, tempdata);
 
-  //set acc odr 256hz
-  tempdata[0] = 0x91; //0x81 1024hz   //0x89 512hz    //0x91  256hz
+  //set acc odr 128hz
+  tempdata[0] = 0x99; //0x81 1024hz   //0x89 512hz    //0x91  256hz // 0x99 128hz
   I2C_Write_NBytes(SH200I_ADDRESS, SH200I_ACC_CONFIG, 1, tempdata);
 
   //set gyro odr 500hz
