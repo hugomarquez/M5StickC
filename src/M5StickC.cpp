@@ -5,7 +5,7 @@
  * @author M5Stack
  * @version v0.1.0
  * @date 2019/09/08
- * 
+ *
  * Licensed under the MIT license. See LICENSE file in the project root for full license information.
  * Copyright (c) M5Stack. All rights reserved.
  **/
@@ -28,7 +28,7 @@ void M5StickC::begin(bool display, bool power, bool serial){
 	if (power) {
 		Axp.begin();
 	}
-	
+
 	if (display) {
 		Lcd.begin();
 	}

@@ -5,7 +5,7 @@
  * @author M5Stack
  * @version v0.1.0
  * @date 2019/09/08
- * 
+ *
  * Licensed under the MIT license. See LICENSE file in the project root for full license information.
  * Copyright (c) M5Stack. All rights reserved.
  **/
@@ -99,7 +99,7 @@ void IMU::getTempData(float *t) {
 }
 
 void IMU::getAhrsData(float *pitch,float *roll,float *yaw){
-  float accX = 0; 
+  float accX = 0;
   float accY = 0;
   float accZ = 0;
 
@@ -109,6 +109,6 @@ void IMU::getAhrsData(float *pitch,float *roll,float *yaw){
 
   getGyroData(&gyroX,&gyroY,&gyroZ);
   getAccelData(&accX,&accY,&accZ);
-  
+
   MahonyAHRSupdateIMU(gyroX * DEG_TO_RAD, gyroY * DEG_TO_RAD, gyroZ * DEG_TO_RAD, accX, accY, accZ,pitch,roll,yaw);
 }
