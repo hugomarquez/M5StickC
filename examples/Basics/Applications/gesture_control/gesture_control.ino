@@ -10,29 +10,28 @@
 
 // BT
 BluetoothSerial BT;
-
 // Timing
 long loopTime, startTime = 0;
 
 void setup() {
+  // Initialize serial monitor
+  //Serial.begin(9600);
   // Initialize M5StickC
   M5.begin(); // Initializes Serial(115200), LCD, RTC, AXP
+  // Button
+  pinMode(M5_BUTTON_HOME, INPUT);
   // Initialize IMU
   M5.Imu.Init();
   // Initialize BT
   BT.begin("CI-N5-V");
   // Sets dislplay color and title
   setDisplay();
-  // Set the smoothing array
-  setSmoothArray();
 }
 
 void loop() {
   loopTime = millis();
-  lowBatteryWarning();
-  screenBrightness();
-  //setIMU();
-  readBT();
-  writeBT();
+  //lowBatteryWarning();
+  //screenBrightness();
+  trainMotion();
   startTime = loopTime;
 }

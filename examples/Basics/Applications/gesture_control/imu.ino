@@ -5,45 +5,95 @@
  *
  */
 
- // IMU
- float ax, ay, az;
+ /* Sample rate for accelerometer */
+ const unsigned int sampleRateHZ = 256;
 
- // Smoothing
- float readings[3][25];
- int32_t readIndex[3];
- float total[3];
- float average[3];
+ /* No. of bytes that one neuron can hold */
+ const unsigned int vectorNumBytes = 128;
 
- void setIMU() {
-   M5.Imu.getAccelData(&ax,&ay,&az);
+ /* Number of processed samples (1 sample == accel x, y, z)
+  * that can fit inside a neuron */
+ const unsigned int samplesPerVector = (vectorNumBytes / 3);
 
-   Serial.printf("ax: %6.2f", ax); Serial.print("\t");
-   Serial.printf("ay: %6.2f", ay); Serial.print("\t");
-   Serial.printf("az: %6.2f", az); Serial.print("\t");
+ const unsigned int sensorBufSize = 1024;
+ const int IMULow = -32768;
+ const int IMUHigh = 32767;
+
+ byte getAverageSample(byte samples[], unsigned int num, unsigned int pos, unsigned int step) {
+   unsigned int ret;
+   unsigned int size = step * 2;
+
+   if (pos < (step * 3) || pos > (num * 3) - (step * 3)) {
+     ret = samples[pos];
+   } else {
+     ret = 0;
+     pos -= (step * 3);
+     for (unsigned int i = 0; i < size; ++i) {
+       ret += samples[pos - (3 * i)];
+     }
+     ret /= size;
+   }
+   return (byte)ret;
  }
 
- void setSmoothArray(){
-   for (int axis = 0; axis < 3; axis++) {
-     readIndex[axis] = 0;
-     total[axis] = 0;
-     average[axis] = 0;
-     for (int i = 0; i < 25; i++){
-       readings[axis][i] = 0;
+
+ void undersample(byte input[], int numSamples, byte vector[]) {
+   unsigned int oi = 0; /* Current position in output sample buffer */
+   unsigned int ii = 0; /* Current position in input sample buffer */
+   unsigned int step = numSamples / samplesPerVector;
+
+   for (unsigned int i = 0; i < samplesPerVector; ++i) {
+     for (unsigned int j = 0; j < 3; ++j) {
+       //vector[oi + j] = input[ii + j];
+       vector[oi + j] = getAverageSample(input, numSamples, ii + j, step);
      }
+     /* Skip 'step' samples */
+     ii += (step * 3);
+     oi += 3;
    }
  }
 
- void smooth(int axis, float val) {
-   total[axis] -= readings[axis][readIndex[axis]];
-   total[axis] += val;
+ void readIMU(byte vector[]) {
+   // raw x, y, z
+   int16_t raw[3];
+   unsigned int i = 0;
+   unsigned int samples = 0;
+   byte bytemap[sensorBufSize];
+   uint16_t timer = 1000; // ~1 sec
 
-   // add value to running total
-   readings[axis][readIndex[axis]] = val;
-   readIndex[axis]++;
+   while(timer > 0) {
+     timer -= 1;
+     M5.Imu.getAccelAdc(&raw[0], &raw[1], &raw[2]);
+     /* Map raw values to 0-255 */
+     bytemap[i]     = (byte) map(raw[0], IMULow, IMUHigh, 0, 255);
+     bytemap[i + 1] = (byte) map(raw[1], IMULow, IMUHigh, 0, 255);
+     bytemap[i + 2] = (byte) map(raw[2], IMULow, IMUHigh, 0, 255);
+     i += 3;
+     ++samples;
+     if (i + 3 > sensorBufSize) {
+       break;
+     }
+   }
+   undersample(bytemap, samples, vector);
+ }
 
-   if(readIndex[axis] >= 25)
-     readIndex[axis] = 0;
+ void rawIMU(int16_t vector[]) {
+   // raw x, y, z
+   int16_t raw[3];
+   unsigned int i = 0;
+   unsigned int samples = 0;
+   uint16_t timer = 1000; // ~1 sec
 
-   // calculate the average:
-   average[axis] = total[axis] / 25;
+   while(timer > 0) {
+     timer -= 1;
+     M5.Imu.getAccelAdc(&raw[0], &raw[1], &raw[2]);
+     vector[i]     = raw[0];
+     vector[i + 1] = raw[1];
+     vector[i + 2] = raw[2];
+     i += 3;
+     ++samples;
+     if (i + 3 > sensorBufSize) {
+       break;
+     }
+   }
  }
